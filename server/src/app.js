@@ -1,11 +1,14 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const morgan = require("morgan");
+
 const planetsRouter = require("./routes/planets/planets.router");
+const launchesRouter = require("./routes/launches/launches.router");
 
 const app = express();
-
 const whitelist = ["http://localhost:3000"];
+
 app.use(
   cors({
     origin: function (origin, callback) {
@@ -17,10 +20,14 @@ app.use(
     },
   })
 );
+app.use(morgan("combined"));
+
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "..", "public")));
+
 app.use(planetsRouter);
-app.get("/", (req, res) => {
+app.use(launchesRouter);
+app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "public", "index.html"));
 });
 
