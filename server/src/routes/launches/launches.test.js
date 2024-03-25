@@ -13,13 +13,13 @@ describe("Launches API", () => {
 
   describe("Test GET /launches", () => {
     it("GET /launches returns 200 status code", async () => {
-      const response = await request(app).get("/launches");
+      const response = await request(app).get("/v1/launches");
       expect(response.statusCode).toBe(200);
     });
 
     it("GET /launches returns an array", async () => {
       const response = await request(app)
-        .get("/launches")
+        .get("/v1/launches")
         .expect("Content-Type", /json/);
       expect(response.body).toBeInstanceOf(Array);
     });
@@ -48,7 +48,7 @@ describe("Launches API", () => {
 
     it("POST /launches returns 201 status code", async () => {
       const response = await request(app)
-        .post("/launches")
+        .post("/v1/launches")
         .send(launchData)
         .expect("Content-Type", /json/)
         .expect(201);
@@ -62,7 +62,7 @@ describe("Launches API", () => {
 
     it("POST /launches Missing required launch property returns 400 status code", async () => {
       const response = await request(app)
-        .post("/launches")
+        .post("/v1/launches")
         .send(launchDataWithoutDate)
         .expect("Content-Type", /json/)
         .expect(400);
@@ -74,7 +74,7 @@ describe("Launches API", () => {
 
     it("POST /launches Invalid launch date return 400 status code", async () => {
       const response = await request(app)
-        .post("/launches")
+        .post("/v1/launches")
         .send(launchDataWithInvalidDate)
         .expect("Content-Type", /json/)
         .expect(400);
@@ -85,14 +85,14 @@ describe("Launches API", () => {
   describe("Test DELETE /launch/:id", () => {
     it("DELETE /launches/:id returns 200 status code", async () => {
       await request(app)
-        .delete("/launches/100")
+        .delete("/v1/launches/100")
         .expect("Content-Type", /json/)
         .expect(200);
     });
 
     it("DELETE /launches/:id returns 404 status code", async () => {
       const response = await request(app)
-        .delete("/launches/102")
+        .delete("/v1/launches/102")
         .expect("Content-Type", /json/)
         .expect(404);
       expect(response.body).toStrictEqual({ error: "Launch not found" });
