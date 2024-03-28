@@ -1,13 +1,17 @@
 const express = require("express");
 const cors = require("cors");
+const helmet = require("helmet");
+
 const path = require("path");
 const morgan = require("morgan");
 
 const api = require("./routes/api");
 
 const app = express();
-const whitelist = ["http://localhost:3000", "http://localhost:8000"];
 
+app.use(helmet());
+
+const whitelist = ["http://localhost:3000", "http://localhost:8000"];
 app.use(
   cors({
     origin: function (origin, callback) {
