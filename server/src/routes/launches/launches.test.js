@@ -87,7 +87,7 @@ describe("Launches API", () => {
   describe("Test DELETE /launch/:id", () => {
     it("DELETE /launches/:id returns 200 status code", async () => {
       await request(app)
-        .delete("/v1/launches/100")
+        .delete("/v1/launches/101")
         .expect("Content-Type", /json/)
         .expect(200);
     });
